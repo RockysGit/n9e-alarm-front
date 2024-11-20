@@ -173,7 +173,7 @@ function App() {
       newVersion: false,
     },
     isPlus,
-    sideMenuBgMode: localStorage.getItem('sideMenuBgMode') || 'theme',
+    sideMenuBgMode: localStorage.getItem('sideMenuBgMode') || 'dark',
     setSideMenuBgMode: (mode: string) => {
       window.localStorage.setItem('sideMenuBgMode', mode);
       setCommonState((state) => ({ ...state, sideMenuBgMode: mode }));

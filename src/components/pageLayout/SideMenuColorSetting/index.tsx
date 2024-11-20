@@ -14,7 +14,7 @@ export const getSideMenuBgColor = (color: SideMenuColors) => {
     case 'theme':
       return THEME_COLOR;
     default:
-      return THEME_COLOR;
+      return '#272a38';
   }
 };
 
