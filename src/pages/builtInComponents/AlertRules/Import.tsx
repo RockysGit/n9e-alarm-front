@@ -76,6 +76,7 @@ function Import(props: IProps & ModalWrapProps) {
     }
   }, []);
 
+
   return (
     <Modal
       title={t('import_to_buisGroup')}
@@ -110,6 +111,16 @@ function Import(props: IProps & ModalWrapProps) {
                 disabled: vals.enabled ? 0 : 1,
                 rule_config: {
                   ...item.rule_config,
+                  queries: item.rule_config.queries.map(query => ({
+                    ...query,
+                    var_config: {
+                      ...query.var_config,
+                      param_val: query.var_config.param_val.map(param => ({
+                        ...param,
+                        query: vals.varConfig.find(varConfig => varConfig.param_val_ids === String(param.id))?.query || []
+                      }))
+                    },
+                  })),
                   datasource_queries: vals?.datasource_queries,
                 },
               };
@@ -178,28 +189,26 @@ function Import(props: IProps & ModalWrapProps) {
         <Form.Item label={t('common:table.enabled')} name='enabled' valuePropName='checked'>
           <Switch />
         </Form.Item>
-        <Form.Item
-            label={"变量名"}
-            name='varConfig'
-            rules={[
-              {
-                required: true,
-              },
-            ]}
-        >
-          <Input disabled={false} />
-        </Form.Item>
-        <Form.Item
-            label={"变量值"}
-            name='varConfig'
-            rules={[
-              {
-                required: true,
-              },
-            ]}
-        >
-          <Select mode='tags' open={false} tokenSeparators={[' ']} />
-        </Form.Item>
+        {varConfigInfo && varConfigInfo.map((val, index) => {
+          if (val.var_enabled === true) {
+          const paramValNames = Array.isArray(val.param_val) ? val.param_val.map(pv => pv.name).join(', ') : '';
+          const paramValIds = Array.isArray(val.param_val) ? val.param_val.map(pv => pv.id).join(', ') : '';
+          return (
+          <div key={index} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+              <Form.Item label={`变量名 ${index + 1}`} name={['varConfig', index, 'param_val_names']} initialValue={paramValNames}>
+                <Input readOnly value={paramValNames} />
+              </Form.Item>
+              <Form.Item label="变量ID" name={['varConfig', index, 'param_val_ids']} initialValue={paramValIds} style={{ display: 'none' }}>
+                <Input type="hidden" value={paramValIds} />
+              </Form.Item>
+              <Form.Item label={`变量值 ${index + 1}`} name={['varConfig', index, 'query']} initialValue={val.param_val.map(pv => pv.query).join(' ')}>
+                <Select mode='tags' open={false} tokenSeparators={[' ']} />
+              </Form.Item>
+            </div>
+          );
+          }
+          return null;
+        })}
         <Form.Item
           label={t('content')}
           name='import'

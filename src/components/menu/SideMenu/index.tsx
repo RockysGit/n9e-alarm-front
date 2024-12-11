@@ -23,21 +23,17 @@ import getPlusMenu from 'plus:/menu';
 
 export const getMenuList = (t) => {
   const menuList = [
-    // {
-    //   key: 'dashboard',
-    //   icon: <IconFont type='icon-Menu_Dashboard' />,
-    //   label: t('仪表盘'),
-    //   children: [
-    //     {
-    //       key: '/dashboards',
-    //       label: t('监控仪表盘'),
-    //     },
-    //     {
-    //       key: '/embedded-dashboards',
-    //       label: t('embeddedDashboards:title'),
-    //     },
-    //   ],
-    // },
+    {
+      key: 'dashboard',
+      icon: <IconFont type='icon-Menu_Dashboard' />,
+      label: t('仪表盘'),
+      children: [
+        {
+          key: '/dashboards',
+          label: t('监控仪表盘'),
+        },
+      ],
+    },
     {
       key: 'metric',
       icon: <IconFont type='icon-IndexManagement1' />,
