@@ -52,6 +52,6 @@ const zh_CN = {
   quickSearchPlaceholder: '输入内容以检索...',
   quickMenus: '快捷菜单',
   integrations: '集成中心',
-  built_in_components: '模板中心',
+  built_in_components: '规则模版',
 };
 export default zh_CN;

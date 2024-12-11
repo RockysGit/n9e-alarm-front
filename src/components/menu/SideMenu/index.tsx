@@ -23,21 +23,21 @@ import getPlusMenu from 'plus:/menu';
 
 export const getMenuList = (t) => {
   const menuList = [
-    {
-      key: 'dashboard',
-      icon: <IconFont type='icon-Menu_Dashboard' />,
-      label: t('仪表盘'),
-      children: [
-        {
-          key: '/dashboards',
-          label: t('监控仪表盘'),
-        },
-        {
-          key: '/embedded-dashboards',
-          label: t('embeddedDashboards:title'),
-        },
-      ],
-    },
+    // {
+    //   key: 'dashboard',
+    //   icon: <IconFont type='icon-Menu_Dashboard' />,
+    //   label: t('仪表盘'),
+    //   children: [
+    //     {
+    //       key: '/dashboards',
+    //       label: t('监控仪表盘'),
+    //     },
+    //     {
+    //       key: '/embedded-dashboards',
+    //       label: t('embeddedDashboards:title'),
+    //     },
+    //   ],
+    // },
     {
       key: 'metric',
       icon: <IconFont type='icon-IndexManagement1' />,
@@ -47,31 +47,31 @@ export const getMenuList = (t) => {
           key: '/metric/explorer',
           label: t('即时查询'),
         },
-        {
-          key: '/metrics-built-in',
-          label: t('metricsBuiltin:title'),
-        },
-        {
-          key: '/object/explorer',
-          label: t('快捷视图'),
-        },
+        // {
+        //   key: '/metrics-built-in',
+        //   label: t('metricsBuiltin:title'),
+        // },
+        // {
+        //   key: '/object/explorer',
+        //   label: t('快捷视图'),
+        // },
         {
           key: '/recording-rules',
           label: t('记录规则'),
         },
       ],
     },
-    {
-      key: 'log',
-      icon: <IconFont type='icon-Menu_LogAnalysis' />,
-      label: t('日志分析'),
-      children: [
-        {
-          key: '/log/explorer',
-          label: t('即时查询'),
-        },
-      ],
-    },
+    // {
+    //   key: 'log',
+    //   icon: <IconFont type='icon-Menu_LogAnalysis' />,
+    //   label: t('日志分析'),
+    //   children: [
+    //     {
+    //       key: '/log/explorer',
+    //       label: t('即时查询'),
+    //     },
+    //   ],
+    // },
     {
       key: 'alarm',
       icon: <IconFont type='icon-Menu_AlarmManagement' />,
@@ -99,21 +99,21 @@ export const getMenuList = (t) => {
         },
       ],
     },
-    {
-      key: 'notification',
-      icon: <NotificationFilled />,
-      label: t('告警通知'),
-      children: [
-        {
-          key: '/help/notification-settings',
-          label: t('通知设置'),
-        },
-        {
-          key: '/help/notification-tpls',
-          label: t('通知模板'),
-        },
-      ],
-    },
+    // {
+    //   key: 'notification',
+    //   icon: <NotificationFilled />,
+    //   label: t('告警通知'),
+    //   children: [
+    //     {
+    //       key: '/help/notification-settings',
+    //       label: t('通知设置'),
+    //     },
+    //     {
+    //       key: '/help/notification-tpls',
+    //       label: t('通知模板'),
+    //     },
+    //   ],
+    // },
     {
       key: 'job',
       icon: <IconFont type='icon-Menu_AlarmSelfhealing' />,
@@ -129,17 +129,17 @@ export const getMenuList = (t) => {
         },
       ],
     },
-    {
-      key: 'targets',
-      icon: <IconFont type='icon-Menu_Infrastructure' />,
-      label: t('基础设施'),
-      children: [
-        {
-          key: '/targets',
-          label: t('监控机器'),
-        },
-      ],
-    },
+    // {
+    //   key: 'targets',
+    //   icon: <IconFont type='icon-Menu_Infrastructure' />,
+    //   label: t('基础设施'),
+    //   children: [
+    //     {
+    //       key: '/targets',
+    //       label: t('监控机器'),
+    //     },
+    //   ],
+    // },
     {
       key: 'manage',
       icon: <IconFont type='icon-Menu_PersonnelOrganization' />,
@@ -163,12 +163,39 @@ export const getMenuList = (t) => {
         },
       ],
     },
+    // {
+    //   key: 'integrations',
+    //   icon: <IconFont type='icon-shujujicheng' />,
+    //   activeIcon: <Icon component={menuIcon.EmbedsSvgHover as any} />,
+    //   label: t('integrations'),
+    //   children: [
+    //     {
+    //       key: '/help/source',
+    //       label: t('数据源'),
+    //     },
+    //     {
+    //       key: '/built-in-components',
+    //       label: t('built_in_components'),
+    //     },
+    //   ],
+    // },
     {
-      key: 'integrations',
-      icon: <IconFont type='icon-shujujicheng' />,
-      activeIcon: <Icon component={menuIcon.EmbedsSvgHover as any} />,
-      label: t('integrations'),
+      key: 'help',
+      icon: <IconFont type='icon-Menu_SystemInformation' />,
+      label: t('系统配置'),
       children: [
+        // {
+        //   key: '/help/variable-configs',
+        //   label: t('变量设置'),
+        // },
+        // {
+        //   key: '/help/sso',
+        //   label: t('单点登录'),
+        // },
+        {
+          key: '/help/servers',
+          label: t('告警引擎'),
+        },
         {
           key: '/help/source',
           label: t('数据源'),
@@ -177,33 +204,18 @@ export const getMenuList = (t) => {
           key: '/built-in-components',
           label: t('built_in_components'),
         },
-      ],
-    },
-    {
-      key: 'help',
-      icon: <IconFont type='icon-Menu_SystemInformation' />,
-      label: t('系统配置'),
-      children: [
         {
-          key: '/help/variable-configs',
-          label: t('变量设置'),
+          key: '/help/notification-tpls',
+          label: t('通知模板'),
         },
-        {
-          key: '/help/sso',
-          label: t('单点登录'),
-        },
-        {
-          key: '/help/servers',
-          label: t('告警引擎'),
-        },
-        {
-          key: '/site-settings',
-          label: t('siteInfo:title'),
-        },
-        {
-          key: '/help/version',
-          label: t('version:title'),
-        },
+        // {
+        //   key: '/site-settings',
+        //   label: t('siteInfo:title'),
+        // },
+        // {
+        //   key: '/help/version',
+        //   label: t('系统版本'),
+        // },
       ],
     },
   ];

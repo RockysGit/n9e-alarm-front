@@ -30,9 +30,7 @@ import { CommonStateContext, basePrefix } from '@/App';
 import { AccessTokenKey } from '@/utils/constant';
 
 export interface DisplayName {
-  oidc: string;
   cas: string;
-  oauth: string;
 }
 
 export default function Login() {
@@ -43,10 +41,9 @@ export default function Login() {
   const { siteInfo } = useContext(CommonStateContext);
   const redirect = location.search && new URLSearchParams(location.search).get('redirect');
   const [displayName, setDis] = useState<DisplayName>({
-    oidc: 'OIDC',
     cas: 'CAS',
-    oauth: 'OAuth',
   });
+  const forceLogin = new URLSearchParams(location.search).get('showLogin'); // 获取URL参数
   const [showcaptcha, setShowcaptcha] = useState(false);
   const verifyimgRef = useRef<HTMLImageElement>(null);
   const captchaidRef = useRef<string>();
@@ -63,15 +60,18 @@ export default function Login() {
   useSsoWay();
 
   useEffect(() => {
-    getSsoConfig().then((res) => {
-      if (res.dat) {
-        setDis({
-          oidc: res.dat.oidcDisplayName,
-          cas: res.dat.casDisplayName,
-          oauth: res.dat.oauthDisplayName,
-        });
-      }
-    });
+    if (forceLogin){
+      message.info('admin登录！');
+    }else {
+      getRedirectURLCAS().then((res) => {
+        if (res.dat) {
+          window.location.href = res.dat.redirect;
+          localStorage.setItem('CAS_state', res.dat.state);
+        } else {
+          message.warning('没有配置 CAS 登录地址！');
+        }
+      });
+    }
 
     ifShowCaptcha().then((res) => {
       setShowcaptcha(res?.dat?.show);
@@ -86,7 +86,7 @@ export default function Login() {
         });
       }
     });
-  }, []);
+  }, [forceLogin]);
 
   const handleSubmit = () => {
     form.validateFields().then(() => {
@@ -191,20 +191,6 @@ export default function Login() {
               <strong>其他登录方式：</strong>
               <a
                 onClick={() => {
-                  getRedirectURL().then((res) => {
-                    if (res.dat) {
-                      window.location.href = res.dat;
-                    } else {
-                      message.warning('没有配置 OIDC 登录地址！');
-                    }
-                  });
-                }}
-              >
-                {displayName.oidc}
-              </a>
-              &nbsp;&nbsp;
-              <a
-                onClick={() => {
                   getRedirectURLCAS().then((res) => {
                     if (res.dat) {
                       window.location.href = res.dat.redirect;
@@ -216,20 +202,6 @@ export default function Login() {
                 }}
               >
                 {displayName.cas}
-              </a>
-              &nbsp;&nbsp;
-              <a
-                onClick={() => {
-                  getRedirectURLOAuth().then((res) => {
-                    if (res.dat) {
-                      window.location.href = res.dat;
-                    } else {
-                      message.warning('没有配置 OAuth 登录地址！');
-                    }
-                  });
-                }}
-              >
-                {displayName.oauth}
               </a>
             </div>
           </Form>
