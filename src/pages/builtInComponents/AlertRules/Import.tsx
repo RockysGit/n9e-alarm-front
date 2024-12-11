@@ -59,6 +59,22 @@ function Import(props: IProps & ModalWrapProps) {
       return undefined;
     }
   }, []);
+  const varConfigInfo = useMemo(() => {
+    try {
+      const parsed = JSON.parse(data);
+      const dataList = _.isArray(parsed) ? parsed : [parsed];
+      const configs = dataList.map(item => item.rule_config);
+      return configs.flatMap(config =>
+          config.queries.map(query => ({
+            param_val: query.var_config.param_val,
+            var_enabled: query.var_enabled
+          }))
+      );
+    } catch (e) {
+      console.error(e);
+      return undefined;
+    }
+  }, []);
 
   return (
     <Modal
@@ -77,6 +93,7 @@ function Import(props: IProps & ModalWrapProps) {
           import: data,
           datasource_cate: defaultDatasourceCate,
           enabled: false,
+          varConfig: varConfigInfo,
         }}
         onFinish={(vals) => {
           let data: any[] = [];
@@ -160,6 +177,28 @@ function Import(props: IProps & ModalWrapProps) {
         {datasourceCate && <DatasourceValueSelectV2 datasourceList={groupedDatasourceList[datasourceCate] || []} />}
         <Form.Item label={t('common:table.enabled')} name='enabled' valuePropName='checked'>
           <Switch />
+        </Form.Item>
+        <Form.Item
+            label={"变量名"}
+            name='varConfig'
+            rules={[
+              {
+                required: true,
+              },
+            ]}
+        >
+          <Input disabled={false} />
+        </Form.Item>
+        <Form.Item
+            label={"变量值"}
+            name='varConfig'
+            rules={[
+              {
+                required: true,
+              },
+            ]}
+        >
+          <Select mode='tags' open={false} tokenSeparators={[' ']} />
         </Form.Item>
         <Form.Item
           label={t('content')}

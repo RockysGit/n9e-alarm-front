@@ -114,7 +114,7 @@ export default function EditModal(props: Props) {
               },
             ]}
           >
-            <InputNumber style={{ width: '100%' }} />
+            <Select mode='tags' open={false} tokenSeparators={[' ']} />
           </Form.Item>
         )}
         {param_type === 'enum' && (
